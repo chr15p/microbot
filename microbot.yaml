@@ -1,0 +1,54 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: stars
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: microbot
+  name: microbot
+  namespace: microbot
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: microbot
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: microbot
+    spec:
+      containers:
+      - image: dontrebootme/microbot:v1
+        name: microbot
+        ports:
+        - containerPort: 80
+        resources: {}
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: microbot
+  name: microbot
+  namespace: microbot
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: microbot
+  type: NodePort
+status:
+  loadBalancer: {}
+

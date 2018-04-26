@@ -1,0 +1,14 @@
+kind: NetworkPolicy
+apiVersion: extensions/v1beta1
+metadata:
+  namespace: microbot
+  name: allow-microbot
+spec:
+  podSelector:
+    matchLabels:
+      run: microbot
+  ingress:
+    - ports:
+      - port: 80
+      from: []
+
